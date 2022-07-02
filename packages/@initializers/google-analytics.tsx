@@ -19,14 +19,12 @@ export const GoogleAnalytics = () => {
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
-            if (window.location.host === "conductor.heartpayroll.com" || window.location.host === "app.heartpayroll.com") {
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${GA4_ID}', {
-                page_path: window.location.pathname,
-              });
-            }
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA4_ID}', {
+              page_path: window.location.pathname,
+            });
           `,
         }}
       />

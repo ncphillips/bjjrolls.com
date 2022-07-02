@@ -7,6 +7,10 @@ type HomeProps = {
 };
 
 export default function Home(props: HomeProps) {
+  const uploadingCount = props.videos.data.filter(
+    (video) => video.status === "uploading"
+  ).length;
+
   return (
     <div>
       <Head>
@@ -22,15 +26,24 @@ export default function Home(props: HomeProps) {
           gap: "24px",
         }}
       >
-        <div style={{ maxWidth: "900px" }}>
+        <div style={{ maxWidth: "900px", width: "100%" }}>
           <h1>bjjrolls</h1>
 
-          {props.videos.data.map((video, index) => (
-            <div
-              key={index}
-              dangerouslySetInnerHTML={{ __html: video.embed.html }}
-            />
-          ))}
+          {uploadingCount && (
+            <p>
+              There are currently <strong>{uploadingCount}</strong> videos
+              uploading.
+            </p>
+          )}
+          <h2>Videos</h2>
+          {props.videos.data
+            .filter((video) => video.status === "available")
+            .map((video, index) => (
+              <div
+                key={index}
+                dangerouslySetInnerHTML={{ __html: video.embed.html }}
+              />
+            ))}
         </div>
       </main>
     </div>
@@ -97,4 +110,5 @@ type VimeoVideo = {
   embed: {
     html: string;
   };
+  status: "available" | "uploading";
 };

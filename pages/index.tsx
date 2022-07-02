@@ -23,10 +23,18 @@ export default function Home(props: HomeProps) {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: "24px",
+          padding: "12px",
         }}
       >
-        <div style={{ maxWidth: "900px", width: "100%" }}>
+        <div
+          style={{
+            maxWidth: "900px",
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            gap: "12px",
+          }}
+        >
           <h1>bjjrolls</h1>
 
           {uploadingCount && (

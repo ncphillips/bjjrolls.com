@@ -25,8 +25,11 @@ export default function Home(props: HomeProps) {
         <div style={{ maxWidth: "900px" }}>
           <h1>bjjrolls</h1>
 
-          {props.videos.data.map((video) => (
-            <div dangerouslySetInnerHTML={{ __html: video.embed.html }} />
+          {props.videos.data.map((video, index) => (
+            <div
+              key={index}
+              dangerouslySetInnerHTML={{ __html: video.embed.html }}
+            />
           ))}
         </div>
       </main>

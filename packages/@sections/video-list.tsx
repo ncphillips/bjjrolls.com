@@ -1,14 +1,14 @@
-import { Video } from "@repositories/videos";
-import styled from "styled-components";
+import { Video } from "@repositories/videos"
+import styled from "styled-components"
 
 type VideosProps = {
-  videos: Video[];
-};
+  videos: Video[]
+}
 
 export const VideoListSection = ({ videos }: VideosProps) => {
   const uploadingCount = videos.filter(
     (video) => video.status === "uploading"
-  ).length;
+  ).length
 
   return (
     <>
@@ -28,8 +28,8 @@ export const VideoListSection = ({ videos }: VideosProps) => {
           />
         ))}
     </>
-  );
-};
+  )
+}
 
 const VideoContainer = styled.div`
   iframe {
@@ -37,4 +37,4 @@ const VideoContainer = styled.div`
     max-width: 450px;
     max-height: 225px;
   }
-`;
+`

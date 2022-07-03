@@ -1,11 +1,11 @@
-import { Vimeo } from "vimeo";
+import { Vimeo } from "vimeo"
 
 export type Video = {
-  status: "available" | "uploading";
+  status: "available" | "uploading"
   embed: {
-    html: string;
-  };
-};
+    html: string
+  }
+}
 
 export class VideoRepository {
   constructor(private userId: string, private vimeo: Vimeo) {}
@@ -14,11 +14,11 @@ export class VideoRepository {
     return new Promise((resolve, reject) => {
       this.vimeo.request(`/users/${this.userId}/videos`, (error, body) => {
         if (error) {
-          reject(error);
+          reject(error)
         } else {
-          resolve(body.data);
+          resolve(body.data)
         }
-      });
-    });
+      })
+    })
   }
 }

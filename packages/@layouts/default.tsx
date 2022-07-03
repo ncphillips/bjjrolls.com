@@ -1,19 +1,19 @@
-import { useUser } from "@auth0/nextjs-auth0";
-import Head from "next/head";
-import styled from "styled-components";
-import css from "@styled-system/css";
+import { useUser } from "@auth0/nextjs-auth0"
+import Head from "next/head"
+import styled from "styled-components"
+import css from "@styled-system/css"
 
-const PAGE_PADDING = 3;
+const PAGE_PADDING = 3
 
 type DefaultLayoutProps = {
-  title?: string;
-  children: React.ReactNode;
-};
+  title?: string
+  children: React.ReactNode
+}
 
 export const DefaultLayout = ({ title, children }: DefaultLayoutProps) => {
-  const { user } = useUser();
+  const { user } = useUser()
   if (title) {
-    title = `${title} | `;
+    title = `${title} | `
   }
   return (
     <>
@@ -42,12 +42,12 @@ export const DefaultLayout = ({ title, children }: DefaultLayoutProps) => {
       </Nav>
       <Main>{children}</Main>
     </>
-  );
-};
+  )
+}
 
 const Main = styled.main`
   ${css({ paddingX: PAGE_PADDING })}
-`;
+`
 
 const Nav = styled.nav`
   display: flex;
@@ -58,9 +58,9 @@ const Nav = styled.nav`
     borderBottom: "1px solid",
     borderBottomColor: "gray.border",
   })}
-`;
+`
 
 const NavSection = styled.div`
   display: flex;
   gap: 8px;
-`;
+`

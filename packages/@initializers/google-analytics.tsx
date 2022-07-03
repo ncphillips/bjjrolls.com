@@ -1,10 +1,10 @@
-import Script from "next/script";
+import Script from "next/script"
 
-const GA4_ID = process.env.NEXT_PUBLIC_GA4;
+const GA4_ID = process.env.NEXT_PUBLIC_GA4
 
 export const GoogleAnalytics = () => {
   if (!GA4_ID) {
-    return null;
+    return null
   }
 
   return (
@@ -29,5 +29,5 @@ export const GoogleAnalytics = () => {
         }}
       />
     </>
-  );
-};
+  )
+}

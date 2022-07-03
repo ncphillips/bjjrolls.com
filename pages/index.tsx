@@ -3,48 +3,25 @@ import { Vimeo } from "vimeo";
 import { useUser } from "@auth0/nextjs-auth0";
 import styled from "styled-components";
 import { DefaultLayout } from "@layouts/default";
+import { VideoListSection } from "@sections/video-list";
+import { WelcomeSection } from "@sections/welcome";
 
 type HomeProps = {
   videos: VimeoVideoList;
 };
 
 export default function Home(props: HomeProps) {
-  const uploadingCount = props.videos.data.filter(
-    (video) => video.status === "uploading"
-  ).length;
+  const { user } = useUser();
 
   return (
     <DefaultLayout>
       <h1>bjjrolls</h1>
 
-      {uploadingCount && (
-        <p>
-          There are currently <strong>{uploadingCount}</strong> videos
-          uploading.
-        </p>
-      )}
-
-      <h2>Videos</h2>
-
-      {props.videos.data
-        .filter((video) => video.status === "available")
-        .map((video, index) => (
-          <VideoContainer
-            key={index}
-            dangerouslySetInnerHTML={{ __html: video.embed.html }}
-          />
-        ))}
+      {!user && <WelcomeSection />}
+      {user && <VideoListSection videos={props.videos.data} />}
     </DefaultLayout>
   );
 }
-
-const VideoContainer = styled.div`
-  iframe {
-    width: 100%;
-    max-width: 450px;
-    max-height: 225px;
-  }
-`;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const vimeo = new Vimeo(

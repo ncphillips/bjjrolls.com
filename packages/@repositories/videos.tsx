@@ -1,6 +1,8 @@
 import { Vimeo } from "vimeo"
 
 export type Video = {
+  name: string
+  created_time: string
   status: "available" | "uploading"
   embed: {
     html: string

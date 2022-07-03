@@ -10,6 +10,19 @@ export const VideoListSection = ({ videos }: VideosProps) => {
     (video) => video.status === "uploading"
   ).length
 
+  const videosByDate: { [key: string]: Video[] } = {}
+
+  videos
+    .filter((video) => video.status === "available")
+    .forEach((video) => {
+      const date = video.name.match(/202.-..-../)[0]
+
+      if (date) {
+        videosByDate[date] = videosByDate[date] || []
+        videosByDate[date].push(video)
+      } else {
+      }
+    })
   return (
     <>
       <h2>Videos</h2>
@@ -19,16 +32,43 @@ export const VideoListSection = ({ videos }: VideosProps) => {
           uploading.
         </p>
       )}
-      {videos
-        .filter((video) => video.status === "available")
-        .map((video, index) => (
-          <VideoContainer
-            key={index}
-            dangerouslySetInnerHTML={{ __html: video.embed.html }}
-          />
-        ))}
+      {Object.keys(videosByDate)
+        .sort(byValueReverse)
+        .map((date) => {
+          return (
+            <>
+              <h3>{date}</h3>
+              {videosByDate[date].sort(byName).map((video, index) => {
+                return (
+                  <VideoContainer
+                    key={index}
+                    dangerouslySetInnerHTML={{ __html: video.embed.html }}
+                  />
+                )
+              })}
+            </>
+          )
+        })}
     </>
   )
+}
+
+function byValueReverse<T>(a: T, b: T) {
+  if (a > b) {
+    return -1
+  } else if (a < b) {
+    return 1
+  }
+  return 0
+}
+
+function byName<T extends { name: string }>(a: T, b: T) {
+  if (a.name > b.name) {
+    return 1
+  } else if (a.name < b.name) {
+    return -1
+  }
+  return 0
 }
 
 const VideoContainer = styled.div`

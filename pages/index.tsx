@@ -1,5 +1,4 @@
 import { GetServerSideProps } from "next";
-import { Vimeo } from "vimeo";
 import { useUser } from "@auth0/nextjs-auth0";
 import { DefaultLayout } from "@layouts/default";
 import { VideoListSection } from "@sections/video-list";

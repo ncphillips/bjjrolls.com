@@ -1,7 +1,8 @@
 import { GetServerSideProps } from "next";
-import Head from "next/head";
 import { Vimeo } from "vimeo";
 import { useUser } from "@auth0/nextjs-auth0";
+import styled from "styled-components";
+import { DefaultLayout } from "@layouts/default";
 
 type HomeProps = {
   videos: VimeoVideoList;
@@ -12,68 +13,38 @@ export default function Home(props: HomeProps) {
     (video) => video.status === "uploading"
   ).length;
 
-  const { user, error, isLoading } = useUser();
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>{error.message}</div>;
-
   return (
-    <div>
-      <Head>
-        <title>BJJ Rolls</title>
-        <meta name="description" content="BJJ Rolls" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <main
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          padding: "12px",
-        }}
-      >
-        <div
-          style={{
-            maxWidth: "900px",
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            gap: "12px",
-          }}
-        >
-          {user ? (
-            <>
-              <div>Logged in as {user.nickname || user.name || user.email}</div>
-              {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-              <a href="/api/auth/logout">Logout</a>
-            </>
-          ) : (
-            // eslint-disable-next-line @next/next/no-html-link-for-pages
-            <a href="/api/auth/login">Login</a>
-          )}
+    <DefaultLayout>
+      <h1>bjjrolls</h1>
 
-          <h1>bjjrolls</h1>
+      {uploadingCount && (
+        <p>
+          There are currently <strong>{uploadingCount}</strong> videos
+          uploading.
+        </p>
+      )}
 
-          {uploadingCount && (
-            <p>
-              There are currently <strong>{uploadingCount}</strong> videos
-              uploading.
-            </p>
-          )}
-          <h2>Videos</h2>
-          {props.videos.data
-            .filter((video) => video.status === "available")
-            .map((video, index) => (
-              <div
-                key={index}
-                dangerouslySetInnerHTML={{ __html: video.embed.html }}
-              />
-            ))}
-        </div>
-      </main>
-    </div>
+      <h2>Videos</h2>
+
+      {props.videos.data
+        .filter((video) => video.status === "available")
+        .map((video, index) => (
+          <VideoContainer
+            key={index}
+            dangerouslySetInnerHTML={{ __html: video.embed.html }}
+          />
+        ))}
+    </DefaultLayout>
   );
 }
+
+const VideoContainer = styled.div`
+  iframe {
+    width: 100%;
+    max-width: 450px;
+    max-height: 225px;
+  }
+`;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const vimeo = new Vimeo(

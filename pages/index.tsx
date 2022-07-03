@@ -44,9 +44,11 @@ export default function Home(props: HomeProps) {
           {user ? (
             <>
               <div>Logged in as {user.nickname || user.name || user.email}</div>
+              {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
               <a href="/api/auth/logout">Logout</a>
             </>
           ) : (
+            // eslint-disable-next-line @next/next/no-html-link-for-pages
             <a href="/api/auth/login">Login</a>
           )}
 

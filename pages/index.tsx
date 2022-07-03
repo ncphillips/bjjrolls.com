@@ -1,6 +1,7 @@
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { Vimeo } from "vimeo";
+import { useUser } from "@auth0/nextjs-auth0";
 
 type HomeProps = {
   videos: VimeoVideoList;
@@ -10,6 +11,11 @@ export default function Home(props: HomeProps) {
   const uploadingCount = props.videos.data.filter(
     (video) => video.status === "uploading"
   ).length;
+
+  const { user, error, isLoading } = useUser();
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>{error.message}</div>;
 
   return (
     <div>
@@ -35,6 +41,15 @@ export default function Home(props: HomeProps) {
             gap: "12px",
           }}
         >
+          {user ? (
+            <>
+              <div>Logged in as {user.nickname || user.name || user.email}</div>
+              <a href="/api/auth/logout">Logout</a>
+            </>
+          ) : (
+            <a href="/api/auth/login">Login</a>
+          )}
+
           <h1>bjjrolls</h1>
 
           {uploadingCount && (

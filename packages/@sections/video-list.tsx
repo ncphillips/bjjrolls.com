@@ -1,7 +1,8 @@
+import { Video } from "@repositories/videos";
 import styled from "styled-components";
 
 type VideosProps = {
-  videos: any[];
+  videos: Video[];
 };
 
 export const VideoListSection = ({ videos }: VideosProps) => {
